@@ -14,6 +14,16 @@ export class App extends Component {
     ],
     filter: '',
   };
+  componentDidMount() {
+    if (localStorage.getItem('contacts')) {
+      this.setState({ contacts: JSON.parse(localStorage.getItem('contacts')) });
+    }
+  }
+  componentDidUpdate(_, prevState) {
+    if (this.state.contacts !== prevState.contacts) {
+      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+    }
+  }
   getNewContactsArray = newContact => {
     if (
       this.state.contacts.some(contact => {
